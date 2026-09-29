@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #1f3c88;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin-bottom: 6px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: #1f3c88;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        button {
+            background: #1f3c88;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #162d68;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #1f3c88;
+            color: white;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .stat-box h3 {
+            color: #1f3c88;
+            font-size: 28px;
+        }
+
+        @media (max-width: 600px) {
+            .stats {
+                flex-direction: column;
+            }
+
+            table {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Student Management Information System</h1>
+    <p>Java Spring Boot Based MIS</p>
+</header>
+
+<div class="container">
+
+    <div class="stats">
+        <div class="stat-box">
+            <h3 th:text="${students.size()}">0</h3>
+            <p>Total Students</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>3</h3>
+            <p>Student Fields</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>100%</h3>
+            <p>Working System</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Add Student</h2>
+
+        <form action="/add" method="post">
+
+            <div class="form-group">
+                <label>Student Name</label>
+                <input type="text" name="name" placeholder="Enter student name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Course</label>
+                <input type="text" name="course" placeholder="Enter course" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Enter email" required>
+            </div>
+
+            <button type="submit">Add Student</button>
+
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Student Records</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Course</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="student, stat : ${students}">
+                    <td th:text="${stat.count}">1</td>
+                    <td th:text="${student.name}">Student Name</td>
+                    <td th:text="${student.course}">BCA</td>
+                    <td th:text="${student.email}">email@example.com</td>
+                </tr>
+
+                <tr th:if="${students.isEmpty()}">
+                    <td colspan="4" class="empty">
+                        No student records available. Add a student above.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
